@@ -1,0 +1,26 @@
+spring:
+    application:
+        name: VotingSystem
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/voting_system_database?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+        username: root
+        password: root
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
+                format_sql: true
+logging:
+    level:
+        org:
+            hibernate:
+                SQL: debug
+                type:
+                    descriptor:
+                        sql: trace
+
+jwt:
+    secret-key: "2F7A819DE5B6C3A2F7A819DE5B6C3A2F7A819DE5B6C3A2F7A819DE5B6C3A2"

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -108,6 +109,19 @@ public class VoteServiceImpl implements VoteService {
         this.voteOptionRepository.deleteAll(this.voteRepository.findById(voteId).orElseThrow(() -> new VoteNotFoundException("No vote found")).getVoteOptions());
         this.voteRepository.deleteById(voteId);
 
+    }
+
+    @Override
+    public List<VoteDTO> getAllVotes() {
+        return this.voteRepository
+                .findAll()
+                .stream()
+                .map((element) -> {
+                    VoteDTO dto = modelMapper.map(element, VoteDTO.class);
+                    Set<VoteOptionDTO> options = element.getVoteOptions().stream().map((e) -> modelMapper.map(e, VoteOptionDTO.class)).collect(Collectors.toSet());
+                    dto.setVoteOptions(options);
+                    return dto;
+                }).collect(Collectors.toList());
     }
 
 

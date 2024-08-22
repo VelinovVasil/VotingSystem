@@ -43,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         if (this.userRepository.existsByEmail(request.getEmail())) {
 
-            throw new UserAlreadyExistsException("User with this email already exists");
+            throw new UserAlreadyExistsException("User with this information already exists");
 
         }
 
@@ -64,6 +64,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(this.encoder.encode(request.getPassword()));
 
         PersonalInfo personalInfo = this.personalInfoRepository.getPersonalInfoByEgn(request.getEgn()).get();
+
+        if (personalInfo.getUser() != null) {
+
+            throw new UserAlreadyExistsException("Personal info about the user is already used");
+        }
 
         user.setPersonalInfo(personalInfo);
 

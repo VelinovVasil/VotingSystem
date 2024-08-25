@@ -4,6 +4,7 @@ package com.vote.votingsystem.models.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -24,5 +25,6 @@ public class VoteOption extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "vote_id", referencedColumnName = "id")
+    @EqualsAndHashCode.Exclude
     private Vote vote;
 }

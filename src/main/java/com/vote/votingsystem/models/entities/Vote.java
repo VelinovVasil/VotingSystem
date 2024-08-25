@@ -1,12 +1,10 @@
 package com.vote.votingsystem.models.entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
@@ -28,5 +26,6 @@ public class Vote extends BaseEntity {
     private int count;
 
     @OneToMany(mappedBy = "vote")
+    @EqualsAndHashCode.Exclude
     private Set<VoteOption> voteOptions;
 }

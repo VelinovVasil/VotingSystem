@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/voting")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
 public class VoteController {
 
     private final VoteService voteService;
@@ -29,6 +28,7 @@ public class VoteController {
 
 
     @GetMapping("/download/{voteId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<byte[]> downloadVotingReport(@PathVariable Long voteId) throws IOException {
             byte[] report = this.voteService.generateVotingReport(voteId);
 
@@ -44,12 +44,14 @@ public class VoteController {
     }
 
     @PostMapping ("/")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> addVote(@RequestBody VoteDTO dto) {
         this.voteService.addVote(dto);
         return new ResponseEntity<>("Vote added successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("/{voteId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteVote(@PathVariable Long voteId) {
         this.voteService.deleteVote(voteId);
         return new ResponseEntity<>("Vote deleted successfully", HttpStatus.OK);

@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -74,7 +75,7 @@ public class VoteServiceImpl implements VoteService {
 
         VoteDTO dto = this.modelMapper.map(vote, VoteDTO.class);
 
-        Set<VoteOptionDTO> voteOptionDTOs = vote.getVoteOptions()
+        Set<VoteOptionDTO> voteOptionDTOs = this.voteOptionRepository.findAllByVoteId(voteId)
                 .stream()
                 .map(v -> this.modelMapper.map(v, VoteOptionDTO.class))
                 .collect(Collectors.toSet());
@@ -118,7 +119,10 @@ public class VoteServiceImpl implements VoteService {
                 .stream()
                 .map((element) -> {
                     VoteDTO dto = modelMapper.map(element, VoteDTO.class);
-                    Set<VoteOptionDTO> options = element.getVoteOptions().stream().map((e) -> modelMapper.map(e, VoteOptionDTO.class)).collect(Collectors.toSet());
+                    Set<VoteOptionDTO> options = this.voteOptionRepository.findAllByVoteId(element.getId())
+                            .stream()
+                            .map((e) -> modelMapper.map(e, VoteOptionDTO.class))
+                            .collect(Collectors.toSet());
                     dto.setVoteOptions(options);
                     return dto;
                 }).collect(Collectors.toList());

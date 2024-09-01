@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/voting")
+@RequestMapping("/voting")
 @RequiredArgsConstructor
 public class VoteController {
 

@@ -13,6 +13,13 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.MySQL8Dialect
                 format_sql: true
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 10MB
+            max-request-size: 10MB
+            file-size-threshold: 10MB
+
 logging:
     level:
         org:
@@ -21,6 +28,9 @@ logging:
                 type:
                     descriptor:
                         sql: trace
+            springframework:
+                web: DEBUG
+                security: DEBUG
 
 jwt:
     secret-key: "2F7A819DE5B6C3A2F7A819DE5B6C3A2F7A819DE5B6C3A2F7A819DE5B6C3A2"
